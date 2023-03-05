@@ -9,21 +9,25 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    abstractcalendarentry.cpp \
     calendar.cpp \
     calendarview.cpp \
     calendaryeardaydelegate.cpp \
     calendaryearmodel.cpp \
     main.cpp \
     mainwindow.cpp \
+    request.cpp \
     testdelegate.cpp \
     testmodel.cpp
 
 HEADERS += \
+    abstractcalendarentry.h \
     calendar.h \
     calendarview.h \
     calendaryeardaydelegate.h \
     calendaryearmodel.h \
     mainwindow.h \
+    request.h \
     testdelegate.h \
     testmodel.h
 

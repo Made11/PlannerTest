@@ -13,6 +13,7 @@ CalendarYearDayDelegate::CalendarYearDayDelegate(QObject *parent)
 void CalendarYearDayDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     CalendarYearModel::CellData data = index.data(CalendarYearModel::DateRole).value<CalendarYearModel::CellData>();
+
     //    QDate day = index.data(CalendarYearModel::DateRole).toDate();
     QDate day = data.day;
     if(data.bValid) {
@@ -36,23 +37,30 @@ void CalendarYearDayDelegate::paint(QPainter *painter, const QStyleOptionViewIte
                           day.toString("d"),
                           &textRect);
 
-        QRectF eventRect(textRect.left(),textRect.bottom(),option.rect.width(),15);
 
         //        painter->fillRect(textRect,Qt::black);
 
 
+        if(data.spCalEntry) {
+            QRectF eventRect(textRect.left(),textRect.bottom(),option.rect.width(),15);
 
-
-        if(data.type == "urlaub") {
-            QColor color = Qt::blue;
-            color.setAlphaF(0.3);
-            QBrush brush;
-            brush.setStyle(Qt::BDiagPattern);
-            brush.setColor(Qt::blue);
-            painter->fillRect(eventRect,brush);
-            painter->fillRect(eventRect,color);
-        } else if(data.type == "mobile") {
-            painter->fillRect(eventRect,Qt::yellow);
+            if(data.spCalEntry->getFromDate() == day) {
+                eventRect.adjust(option.rect.width()*0.20,0,0,0);
+            }
+            if(data.spCalEntry->getToDate() == day) {
+                eventRect.adjust(0,0,-option.rect.width()*0.20,0);
+            }
+            QColor color = data.spCalEntry->getColor();
+            if(data.spCalEntry->isReleased()) {
+                QBrush brush;
+                brush.setStyle(Qt::BDiagPattern);
+                brush.setColor(color);
+                painter->fillRect(eventRect,brush);
+                color.setAlphaF(0.4);
+                painter->fillRect(eventRect,color);
+            } else {
+                painter->fillRect(eventRect,color);
+            }
         }
         //    painter->setRenderHint(QPainter::Antialiasing, true);
         //    painter->setPen(Qt::NoPen);

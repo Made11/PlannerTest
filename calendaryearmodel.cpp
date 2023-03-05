@@ -58,12 +58,12 @@ void CalendarYearModel::setCalendarYear(int iYear)
     this->endResetModel();
 }
 
-void CalendarYearModel::addEntry(QString sEntry, QList<QPair<QDate, QDate> > liDates)
+void CalendarYearModel::addEntry(QSharedPointer<AbstractCalendarEntry> spCalEntry, QList<QPair<QDate, QDate> > liDates)
 {
     foreach (auto dateRange, liDates) {
         for (int var = 0; var < dateRange.first.daysTo(dateRange.second) + 1; ++var) {
             QDate d = dateRange.first.addDays(var);
-            _liData[d.month()-1][d.day()-1+_liFirstDayOffset[d.month()-1]].type = sEntry;
+            _liData[d.month()-1][d.day()-1+_liFirstDayOffset[d.month()-1]].spCalEntry = spCalEntry;
         }
     }
 }
@@ -75,6 +75,13 @@ void CalendarYearModel::addEntry(QString sEntry, QModelIndex miIndex)
     }
     emit this->dataChanged(miIndex,miIndex);
 }
+
+void CalendarYearModel::addEntry(QSharedPointer<AbstractCalendarEntry> spCalEntry)
+{
+    this->addEntry(spCalEntry,QList<QPair<QDate, QDate> >() << qMakePair(spCalEntry->getFromDate(), spCalEntry->getToDate()));
+}
+
+
 
 
 

@@ -1,7 +1,7 @@
 #ifndef CALENDARYEARMODEL_H
 #define CALENDARYEARMODEL_H
 
-#include "calendar.h"
+#include "abstractcalendarentry.h"
 #include <QAbstractTableModel>
 
 class CalendarYearModel : public QAbstractTableModel
@@ -11,6 +11,7 @@ public:
         bool bValid;
         QDate day;
         QString type;
+        QSharedPointer<AbstractCalendarEntry> spCalEntry;
     };
     enum Role {
       DateRole = Qt::UserRole + 1,
@@ -24,8 +25,9 @@ public:
     QVariant data(const QModelIndex &index, int role) const;
 
     void setCalendarYear(int iYear);
-    void addEntry(QString sEntry, QList<QPair<QDate,QDate> > liDates);
+    void addEntry(QSharedPointer<AbstractCalendarEntry> spCalEntry, QList<QPair<QDate,QDate> > liDates);
     void addEntry(QString sEntry, QModelIndex miIndex);
+    void addEntry(QSharedPointer<AbstractCalendarEntry> spCalEntry);
 
 private:
     int _iYear;
