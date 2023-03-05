@@ -43,6 +43,8 @@ void CalendarYearDayDelegate::paint(QPainter *painter, const QStyleOptionViewIte
         if(data.spCalEntry) {
             QRectF eventRect(textRect.left(),textRect.bottom(),option.rect.width(),15);
 
+            qDebug() << data.spCalEntry->getFromDate();
+            qDebug() << data.spCalEntry->getToDate();
             if(data.spCalEntry->getFromDate() == day) {
                 eventRect.adjust(option.rect.width()*0.20,0,0,0);
             }
