@@ -39,8 +39,13 @@ MainWindow::~MainWindow()
 
 void MainWindow::add()
 {
+    QSharedPointer<Request> spRequest = QSharedPointer<Request>(new Request());
+
+    spRequest->setRequestType(Request::Vecation);
     foreach (QModelIndex miIndex, ui->tableView->selectionModel()->selectedIndexes()) {
-//        _spModel->addEntry("urlaub", miIndex);
+        spRequest->setRequestTimePeriod(qMakePair(miIndex.data(CalendarYearModel::DateRole).toDate(),
+                                                  miIndex.data(CalendarYearModel::DateRole).toDate()));
+        _spModel->addEntry(spRequest, miIndex);
     }
 
 }

@@ -25,14 +25,10 @@ QVariant CalendarYearModel::data(const QModelIndex &index, int role) const
     }
 
     if(role == DateRole) {
-        const int firstDayOfMonth = QDate(_iYear,index.row()+1,1).dayOfWeek();
-        const int iDay = index.column()+1-(firstDayOfMonth-1);
-        QDate currentDay = QDate(_iYear,index.row()+1,iDay);
-        if(currentDay.isValid()) {
-//            return currentDay;
-        }
+        return _liData[index.row()][index.column()].day;
+    } else if (role == CellDataRole) {
         return QVariant::fromValue(_liData[index.row()][index.column()]);
-//        return QDate();
+
     }
 
     return QVariant();
@@ -68,10 +64,10 @@ void CalendarYearModel::addEntry(QSharedPointer<AbstractCalendarEntry> spCalEntr
     }
 }
 
-void CalendarYearModel::addEntry(QString sEntry, QModelIndex miIndex)
+void CalendarYearModel::addEntry(QSharedPointer<AbstractCalendarEntry> spCalEntry, QModelIndex miIndex)
 {
     if(_liData[miIndex.row()][miIndex.column()].bValid) {
-        _liData[miIndex.row()][miIndex.column()].type = sEntry;
+        _liData[miIndex.row()][miIndex.column()].spCalEntry = spCalEntry;
     }
     emit this->dataChanged(miIndex,miIndex);
 }

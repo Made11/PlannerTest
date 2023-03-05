@@ -12,9 +12,8 @@ CalendarYearDayDelegate::CalendarYearDayDelegate(QObject *parent)
 
 void CalendarYearDayDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    CalendarYearModel::CellData data = index.data(CalendarYearModel::DateRole).value<CalendarYearModel::CellData>();
+    CalendarYearModel::CellData data = index.data(CalendarYearModel::CellDataRole).value<CalendarYearModel::CellData>();
 
-    //    QDate day = index.data(CalendarYearModel::DateRole).toDate();
     QDate day = data.day;
     if(data.bValid) {
         //        painter->save();

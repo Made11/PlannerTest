@@ -14,7 +14,7 @@ public:
         QSharedPointer<AbstractCalendarEntry> spCalEntry;
     };
     enum Role {
-      DateRole = Qt::UserRole + 1,
+      DateRole = Qt::UserRole + 1, CellDataRole
     };
     explicit CalendarYearModel(QObject *parent = nullptr);
 
@@ -26,7 +26,7 @@ public:
 
     void setCalendarYear(int iYear);
     void addEntry(QSharedPointer<AbstractCalendarEntry> spCalEntry, QList<QPair<QDate,QDate> > liDates);
-    void addEntry(QString sEntry, QModelIndex miIndex);
+    void addEntry(QSharedPointer<AbstractCalendarEntry> spCalEntry, QModelIndex miIndex);
     void addEntry(QSharedPointer<AbstractCalendarEntry> spCalEntry);
 
 private:
