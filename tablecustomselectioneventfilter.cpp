@@ -64,9 +64,11 @@ void TableCustomSelectionEventFilter::selectCustomStyle(const QModelIndex &miFro
     const QModelIndex miStartIndex = qMin(miFromIndex, miToIndex);
     const QModelIndex miEndIndex = qMax(miFromIndex, miToIndex);
 
+    QItemSelection itemSelection;
     for (int iRow = miStartIndex.row(); iRow <= miEndIndex.row(); ++iRow) {
-        for (int iColumn = (iRow == miStartIndex.row() ? miStartIndex.column() : 0); iColumn <= ((iRow == miStartIndex.row() && iRow == miEndIndex.row()) || iRow == miEndIndex.row() ? miEndIndex.column() : _pTableView->model()->columnCount()); ++iColumn) {
-            _pTableView->selectionModel()->select(_pTableView->model()->index(iRow,iColumn), QItemSelectionModel::Select);
-        }
+        itemSelection.merge(QItemSelection(_pTableView->model()->index(iRow,(iRow == miStartIndex.row() ? miStartIndex.column() : 0)),
+                                           _pTableView->model()->index(iRow,((iRow == miStartIndex.row() && iRow == miEndIndex.row()) || iRow == miEndIndex.row() ? miEndIndex.column() : _pTableView->model()->columnCount()-1)))
+                            , QItemSelectionModel::Select);
     }
+    _pTableView->selectionModel()->select(itemSelection,QItemSelectionModel::Select);
 }
