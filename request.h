@@ -5,7 +5,7 @@
 #include <QDate>
 #include <abstractcalendarentry.h>
 
-class Request : public QObject, public AbstractCalendarEntry
+class Request : public QObject//, public AbstractCalendarEntry
 {
     Q_OBJECT
     Q_PROPERTY(Type requestType READ getRequestType WRITE setRequestType NOTIFY requestTypeChanged)
@@ -33,11 +33,11 @@ private:
 
 
     // AbstractCalendarEntry interface
-public:
-    QDate getFromDate() const;
-    QDate getToDate() const;
-    QColor getColor() const;
-    bool isReleased() const;
+//public:
+//    QDate getFromDate() const;
+//    QDate getToDate() const;
+//    QColor getColor() const;
+//    bool isReleased() const;
 };
 
 #endif // REQUEST_H

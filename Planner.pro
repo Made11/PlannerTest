@@ -17,6 +17,8 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     request.cpp \
+    requestentry.cpp \
+    tablecustomselectioneventfilter.cpp \
     testdelegate.cpp \
     testmodel.cpp
 
@@ -28,6 +30,8 @@ HEADERS += \
     calendaryearmodel.h \
     mainwindow.h \
     request.h \
+    requestentry.h \
+    tablecustomselectioneventfilter.h \
     testdelegate.h \
     testmodel.h
 
